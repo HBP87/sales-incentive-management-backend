@@ -46,7 +46,13 @@ public class SalesService {
         return this.salesRepository.findAllBySalesPerson(salesPerson);
     }
 
-    public Sales makeSale(Integer vehicleId, String username) {
+
+    public Sales makeSale(Integer vehicleId, String username, Date... varArgs) {
+        Date givenDate = null;
+        try {
+            givenDate = varArgs[0];
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+        }
         Vehicle vehicle;
         SalesPerson salesPerson;
         try {
@@ -94,8 +100,12 @@ public class SalesService {
         this.salesPersonRepository.save(level3);
         //Commission End
 
-
-        Sales sales = new Sales(vehicle, salesPerson, vehicle.getCost(), new Date());
+        Sales sales;
+        if (givenDate == null) {
+            sales = new Sales(vehicle, salesPerson, vehicle.getCost(), new Date());
+        } else {
+            sales = new Sales(vehicle, salesPerson, vehicle.getCost(), givenDate);
+        }
         return this.salesRepository.save(sales);
     }
 }
