@@ -1,12 +1,10 @@
 package com.accolite.sim.controller;
 
+import com.accolite.sim.dto.UpdateQuotaDTO;
 import com.accolite.sim.entity.Quota;
 import com.accolite.sim.service.QuotaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +23,10 @@ public class QuotaController {
     @GetMapping("/{location}")
     public Quota getQuotaByLocation(@PathVariable String location) {
         return this.quotaService.getQuotaByLocation(location);
+    }
+
+    @PostMapping("/edit")
+    public Quota updateQuotaByID(@RequestBody UpdateQuotaDTO newQuotaDTO) {
+        return this.quotaService.editQuota(newQuotaDTO.getQuotaId(), newQuotaDTO.getNewQuotaAmount());
     }
 }

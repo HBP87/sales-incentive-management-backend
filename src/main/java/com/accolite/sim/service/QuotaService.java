@@ -27,4 +27,15 @@ public class QuotaService {
     public List<Quota> getAllQuota() {
         return this.quotaRepository.findAll();
     }
+
+    public Quota editQuota(Integer quotaId, Integer newQuotaAmount) {
+        Quota quota;
+        try {
+            quota = this.quotaRepository.findById(quotaId).get();
+        } catch (Exception ex) {
+            throw new EntityNotFoundException("Quota with id: " + quotaId + " not found");
+        }
+        quota.setQuotaAmount(newQuotaAmount);
+        return this.quotaRepository.save(quota);
+    }
 }
