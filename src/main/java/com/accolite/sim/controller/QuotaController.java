@@ -29,4 +29,10 @@ public class QuotaController {
     public Quota updateQuotaByID(@RequestBody UpdateQuotaDTO newQuotaDTO) {
         return this.quotaService.editQuota(newQuotaDTO.getQuotaId(), newQuotaDTO.getNewQuotaAmount());
     }
+
+    @GetMapping("/user/{username}")
+    public Quota getQuotaByUsername(@PathVariable String username) {
+        return this.quotaService.getQuotaByUsername(username);
+    }
+
 }
